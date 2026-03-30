@@ -1,7 +1,7 @@
 def obtener_lineas(texto):
     # Esta función separa el texto en una lista de líneas
     lineas = texto.split(".")
-    print(lineas)
+    print(lineas) # Para chequear
     lineas_limpias = []
 
     for linea in lineas:
