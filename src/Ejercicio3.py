@@ -1,10 +1,6 @@
-import re
-
-
 def limpiar_spoilers(texto_usuario):
-    # Esta función toma el texto ingresado por el usuario
-    # y lo separa en una lista usando la coma.
-    # También elimina espacios extra al inicio y al final.
+    # Esta función separa las palabras spoiler ingresadas por coma
+    # y elimina espacios extra
     partes = texto_usuario.split(",")
     spoilers = []
 
@@ -17,24 +13,31 @@ def limpiar_spoilers(texto_usuario):
     return spoilers
 
 
-def reemplazar_una_palabra(texto, palabra_spoiler):
+def reemplazar_una_palabra(texto, spoiler):
     # Esta función reemplaza una palabra spoiler por asteriscos
-    # sin importar si está en mayúscula o minúscula.
-    asteriscos = "*" * len(palabra_spoiler)
+    # sin distinguir mayúsculas de minúsculas
+    texto_minuscula = texto.lower()
+    spoiler_minuscula = spoiler.lower()
 
-    texto_modificado = re.sub(
-        palabra_spoiler,
-        asteriscos,
-        texto,
-        flags=re.IGNORECASE
-    )
+    resultado = ""
+    i = 0
 
-    return texto_modificado
+    while i < len(texto):
+        fragmento = texto_minuscula[i:i + len(spoiler)]
+
+        if fragmento == spoiler_minuscula:
+            resultado += "*" * len(spoiler)
+            i += len(spoiler)
+        else:
+            resultado += texto[i]
+            i += 1
+
+    return resultado
 
 
 def filtrar_spoilers(review, spoilers):
-    # Esta función recorre toda la lista de spoilers
-    # y los va reemplazando uno por uno en el texto.
+    # Esta función recorre la lista de spoilers
+    # y los reemplaza uno por uno en el texto
     texto_filtrado = review
 
     for spoiler in spoilers:
